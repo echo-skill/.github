@@ -6,7 +6,7 @@ AI agent skills marketplace — discover, share, and install reusable skills for
 
 | Skill | Category | Description |
 |-------|----------|-------------|
-| [develop-unit-tests](https://github.com/echo-skill/echoskill/tree/main/coding/develop-unit-tests) | coding | Sociable unit tests with directory isolation, no mocks |
+| [sociable-unit-tests](https://github.com/echo-skill/echoskill/tree/main/coding/sociable-unit-tests) | coding | Sociable unit tests with directory isolation, no mocks |
 | [capture-context](https://github.com/echo-skill/echoskill/tree/main/prompting/capture-context) | prompting | Capture all session context before ending a conversation |
 | [develop-skill](https://github.com/echo-skill/echoskill/tree/main/coding/develop-skill) | coding | Create portable agent skills for Claude Code and Gemini CLI |
 | [setup-agent-context](https://github.com/echo-skill/echoskill/tree/main/coding/setup-agent-context) | coding | Make any repo AI-ready with CLAUDE.md and Gemini settings |
