@@ -125,6 +125,43 @@
       border-top: 1px solid #30363D;
     }
     .skill-card.active .skill-detail { display: block; }
+    .skill-tabs {
+      display: flex;
+      gap: 0;
+      margin: 0.8rem 0 0.5rem;
+      border-bottom: 1px solid #30363D;
+    }
+    .skill-tab {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.75rem;
+      color: #8B949E;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+      font-family: inherit;
+    }
+    .skill-tab:hover { color: #E6EDF3; }
+    .skill-tab.active {
+      color: #58A6FF;
+      border-bottom-color: #58A6FF;
+    }
+    .skill-tab-content { display: none; }
+    .skill-tab-content.active { display: block; }
+    .skill-source-link {
+      font-size: 0.75rem;
+      color: #484F58;
+      margin-top: 0.5rem;
+      text-align: right;
+    }
+    .skill-source-link a {
+      color: #58A6FF;
+      text-decoration: none;
+    }
+    .skill-source-link a:hover { text-decoration: underline; }
     .skill-detail .loading {
       color: #484F58;
       font-size: 0.8rem;
@@ -360,18 +397,41 @@
       card.classList.add('active');
 
       const detail = card.querySelector('.skill-detail');
-      const content = detail.querySelector('.skill-readme');
-      if (content.innerHTML) return;
+      const aboutContent = detail.querySelector('.tab-about');
+      if (aboutContent.innerHTML) return; // Already loaded
 
       detail.querySelector('.loading').textContent = 'Loading...';
       loadContent(path, 'README.md').then(md => {
         if (md) {
-          content.innerHTML = renderMarkdown(md);
+          aboutContent.innerHTML = renderMarkdown(md);
           detail.querySelector('.loading').style.display = 'none';
         } else {
-          detail.querySelector('.loading').textContent = 'Could not load README.';
+          detail.querySelector('.loading').textContent = 'Could not load.';
         }
       });
+    }
+
+    function switchTab(card, tabName) {
+      card.querySelectorAll('.skill-tab').forEach(t => t.classList.remove('active'));
+      card.querySelectorAll('.skill-tab-content').forEach(t => t.classList.remove('active'));
+      card.querySelector(`.skill-tab[data-tab="${tabName}"]`).classList.add('active');
+      card.querySelector(`.tab-${tabName}`).classList.add('active');
+
+      // Lazy-load definition tab
+      if (tabName === 'definition') {
+        const defContent = card.querySelector('.tab-definition');
+        if (!defContent.innerHTML) {
+          const path = card.dataset.path;
+          defContent.innerHTML = '<p style="color:#484F58;font-size:0.8rem">Loading...</p>';
+          loadContent(path, 'SKILL.md').then(md => {
+            if (md) {
+              defContent.innerHTML = `<pre><code>${md.replace(/</g, '&lt;')}</code></pre>`;
+            } else {
+              defContent.innerHTML = '<p style="color:#484F58">Could not load SKILL.md.</p>';
+            }
+          });
+        }
+      }
     }
 
     function render(skills) {
@@ -404,7 +464,9 @@
         items.forEach(s => {
           const card = document.createElement('div');
           card.className = 'skill-card';
+          card.dataset.path = s.path;
           const labelClass = cat === 'claude' ? 'label label-claude' : 'label';
+          const ghUrl = `https://github.com/${REPO}/tree/${BRANCH}/${s.path}`;
           card.innerHTML = `
             <div class="skill-summary">
               <span class="skill-name"><span class="${labelClass}">${cat || 'general'}</span>${s.name}</span>
@@ -413,11 +475,23 @@
             </div>
             <div class="skill-detail">
               <div class="loading"></div>
-              <div class="skill-readme"></div>
+              <div class="skill-tabs">
+                <button class="skill-tab active" data-tab="about">About</button>
+                <button class="skill-tab" data-tab="definition">Definition</button>
+              </div>
+              <div class="skill-tab-content tab-about active skill-readme"></div>
+              <div class="skill-tab-content tab-definition skill-readme"></div>
+              <div class="skill-source-link"><a href="${ghUrl}" target="_blank">View source on GitHub</a></div>
             </div>
           `;
           card.querySelector('.skill-summary').addEventListener('click', () => {
             toggleSkill(card, s.path);
+          });
+          card.querySelectorAll('.skill-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+              e.stopPropagation();
+              switchTab(card, tab.dataset.tab);
+            });
           });
           container.appendChild(card);
         });
