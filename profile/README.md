@@ -14,6 +14,10 @@ AI agent skills marketplace — discover, share, and install reusable skills for
 
 [Browse all skills](https://github.com/echo-skill/echoskill)
 
+## Skill management
+
+Install skills natively with Claude Code or Gemini CLI, or use [em](https://echomodel.ai) (`pipx install echomodel`) for cross-platform management from a single tool.
+
 ## Links
 
 - [echoskill.ai](https://echoskill.ai)
