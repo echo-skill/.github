@@ -11,13 +11,11 @@
       background: #0D1117;
       color: #E6EDF3;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 2rem;
     }
     .container {
-      max-width: 520px;
+      max-width: 720px;
+      margin: 0 auto;
       text-align: center;
     }
     .logo {
@@ -25,6 +23,7 @@
       height: 100px;
       border-radius: 20px;
       margin-bottom: 1.5rem;
+      margin-top: 3rem;
     }
     h1 {
       font-size: 2.2rem;
@@ -43,7 +42,7 @@
       font-size: 0.95rem;
       line-height: 1.7;
       color: #C9D1D9;
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
     .badge {
       display: inline-block;
@@ -55,16 +54,93 @@
       color: #D29922;
       margin-bottom: 2rem;
     }
+    h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #E6EDF3;
+      margin-bottom: 1rem;
+      text-align: left;
+    }
+    .section {
+      margin-bottom: 3rem;
+    }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      text-align: left;
+    }
+    .card {
+      background: #161B22;
+      border: 1px solid #30363D;
+      border-radius: 8px;
+      padding: 1rem;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    a.card:hover { border-color: #58A6FF; }
+    .card h3 {
+      font-size: 0.9rem;
+      color: #58A6FF;
+      margin-bottom: 0.3rem;
+    }
+    .card p {
+      font-size: 0.8rem;
+      color: #8B949E;
+      line-height: 1.4;
+    }
+    .card .label {
+      display: inline-block;
+      font-size: 0.65rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+      background: #1F3A5F;
+      color: #58A6FF;
+    }
+    .links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .links a {
+      display: inline-block;
+      padding: 0.6rem 1.4rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .links a:hover { opacity: 0.85; }
+    .btn-primary {
+      background: #58A6FF;
+      color: #0D1117;
+    }
+    .btn-secondary {
+      background: transparent;
+      color: #58A6FF;
+      border: 1px solid #30363D;
+    }
     footer {
+      text-align: center;
       color: #484F58;
       font-size: 0.8rem;
       margin-top: 2rem;
+      padding-bottom: 2rem;
     }
     footer a {
       color: #58A6FF;
       text-decoration: none;
     }
     footer a:hover { text-decoration: underline; }
+    @media (max-width: 480px) {
+      .cards { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+    }
   </style>
 </head>
 <body>
@@ -78,7 +154,48 @@
       Discover, share, and install capabilities for Claude Code,
       Gemini CLI, and other MCP-compatible clients.
     </p>
-    <footer>Part of the <a href="https://echomodel.ai">echomodel</a> ecosystem</footer>
+
+    <div class="section">
+      <h2>Featured skills</h2>
+      <div class="cards">
+        <a href="https://github.com/echo-skill/skills/tree/main/coding/develop-unit-tests" class="card">
+          <span class="label">coding</span>
+          <h3>develop-unit-tests</h3>
+          <p>Sociable unit tests with directory isolation, no mocks, and transaction-level testing.</p>
+        </a>
+        <a href="https://github.com/echo-skill/skills/tree/main/prompting/capture-context" class="card">
+          <span class="label">prompting</span>
+          <h3>capture-context</h3>
+          <p>Capture all valuable session context before ending a conversation. Never lose work.</p>
+        </a>
+        <a href="https://github.com/echo-skill/skills/tree/main/coding/develop-skill" class="card">
+          <span class="label">coding</span>
+          <h3>develop-skill</h3>
+          <p>Create portable agent skills that work across Claude Code and Gemini CLI.</p>
+        </a>
+        <a href="https://github.com/echo-skill/skills/tree/main/coding/setup-agent-context" class="card">
+          <span class="label">coding</span>
+          <h3>setup-agent-context</h3>
+          <p>Configure CLAUDE.md and Gemini settings to make any repo AI-ready.</p>
+        </a>
+        <a href="https://github.com/echo-skill/skills/tree/main/coding/author-github-issue" class="card">
+          <span class="label">coding</span>
+          <h3>author-github-issue</h3>
+          <p>Structured GitHub issue authoring with privacy rules and best practices.</p>
+        </a>
+        <a href="https://github.com/echo-skill/skills/tree/main/coding/publish-skill" class="card">
+          <span class="label">coding</span>
+          <h3>publish-skill</h3>
+          <p>Publish skills to a marketplace for others to discover and install.</p>
+        </a>
+      </div>
+    </div>
+
+    <div class="links">
+      <a href="https://github.com/echo-skill/skills" class="btn-primary">Browse all skills</a>
+      <a href="https://echomodel.ai" class="btn-secondary">echomodel.ai</a>
+    </div>
   </div>
+  <footer>Part of the <a href="https://echomodel.ai">echomodel</a> ecosystem</footer>
 </body>
 </html>
