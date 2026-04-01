@@ -345,7 +345,7 @@
         'prompting': 'Prompting',
         'consulting': 'Consulting',
         'claude': 'Claude Code',
-        '': 'Other'
+        '': 'General'
       };
 
       skills.forEach(s => {
@@ -370,7 +370,7 @@
           const labelClass = cat === 'claude' ? 'label label-claude' : 'label';
           card.innerHTML = `
             <div class="skill-summary">
-              <span class="skill-name"><span class="${labelClass}">${cat || 'other'}</span>${s.name}</span>
+              <span class="skill-name"><span class="${labelClass}">${cat || 'general'}</span>${s.name}</span>
               <span class="skill-brief">${firstSentence(s.description)}</span>
               <span class="skill-chevron">&#9654;</span>
             </div>
