@@ -14,21 +14,24 @@
       padding: 2rem;
     }
     .container {
-      max-width: 720px;
+      max-width: 760px;
       margin: 0 auto;
+    }
+    .header {
       text-align: center;
+      margin-bottom: 2.5rem;
     }
     .logo {
-      width: 100px;
-      height: 100px;
-      border-radius: 20px;
-      margin-bottom: 1.5rem;
-      margin-top: 3rem;
+      width: 80px;
+      height: 80px;
+      border-radius: 16px;
+      margin-bottom: 1rem;
+      margin-top: 2rem;
     }
     h1 {
       font-size: 2.2rem;
       font-weight: 700;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.4rem;
       background: linear-gradient(135deg, #58A6FF, #3FB9CF);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -36,13 +39,7 @@
     .tagline {
       font-size: 1rem;
       color: #8B949E;
-      margin-bottom: 2rem;
-    }
-    .description {
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: #C9D1D9;
-      margin-bottom: 2.5rem;
+      margin-bottom: 1rem;
     }
     .badge {
       display: inline-block;
@@ -52,84 +49,161 @@
       font-weight: 500;
       background: #3D2E00;
       color: #D29922;
-      margin-bottom: 2rem;
-    }
-    h2 {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #E6EDF3;
       margin-bottom: 1rem;
-      text-align: left;
     }
-    .section {
-      margin-bottom: 3rem;
+    .intro {
+      font-size: 0.9rem;
+      color: #C9D1D9;
+      line-height: 1.6;
+      max-width: 540px;
+      margin: 0 auto 1.5rem;
     }
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.8rem;
-      text-align: left;
-    }
-    .card {
+    .install-box {
       background: #161B22;
       border: 1px solid #30363D;
       border-radius: 8px;
-      padding: 1rem;
-      text-decoration: none;
-      transition: border-color 0.2s;
-    }
-    a.card:hover { border-color: #58A6FF; }
-    .card h3 {
-      font-size: 0.9rem;
-      color: #58A6FF;
-      margin-bottom: 0.3rem;
-    }
-    .card p {
+      padding: 1rem 1.2rem;
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
       font-size: 0.8rem;
       color: #8B949E;
-      line-height: 1.4;
     }
-    .card .label {
-      display: inline-block;
-      font-size: 0.65rem;
-      padding: 0.1rem 0.4rem;
+    .install-box code {
+      display: block;
+      color: #E6EDF3;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      margin: 0.3rem 0;
+    }
+    .category-label {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #E6EDF3;
+      margin: 2rem 0 0.8rem;
+    }
+    .skill-card {
+      background: #161B22;
+      border: 1px solid #30363D;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: border-color 0.2s;
+    }
+    .skill-card:hover { border-color: #58A6FF; }
+    .skill-card.active { border-color: #58A6FF; }
+    .skill-summary {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1rem;
+    }
+    .skill-name {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #58A6FF;
+    }
+    .skill-brief {
+      font-size: 0.8rem;
+      color: #8B949E;
+      margin-left: 1rem;
+      flex: 1;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .skill-chevron {
+      color: #484F58;
+      font-size: 0.8rem;
+      transition: transform 0.2s;
+      margin-left: 0.5rem;
+      flex-shrink: 0;
+    }
+    .skill-card.active .skill-chevron { transform: rotate(90deg); }
+    .skill-detail {
+      display: none;
+      padding: 0 1rem 1rem;
+      border-top: 1px solid #30363D;
+    }
+    .skill-card.active .skill-detail { display: block; }
+    .skill-detail .loading {
+      color: #484F58;
+      font-size: 0.8rem;
+      padding: 0.5rem 0;
+    }
+    .skill-readme {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      color: #C9D1D9;
+    }
+    .skill-readme h1 { display: none; }
+    .skill-readme h2 {
+      font-size: 0.95rem;
+      color: #E6EDF3;
+      margin: 1.2rem 0 0.4rem;
+      background: none;
+      -webkit-text-fill-color: #E6EDF3;
+    }
+    .skill-readme h3 {
+      font-size: 0.85rem;
+      color: #E6EDF3;
+      margin: 1rem 0 0.3rem;
+    }
+    .skill-readme p { margin: 0.4rem 0; }
+    .skill-readme strong { color: #E6EDF3; }
+    .skill-readme code {
+      background: #0D1117;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+    }
+    .skill-readme pre {
+      background: #0D1117;
+      border: 1px solid #30363D;
       border-radius: 6px;
-      margin-bottom: 0.4rem;
+      padding: 0.8rem;
+      overflow-x: auto;
+      margin: 0.5rem 0;
+    }
+    .skill-readme pre code {
+      background: none;
+      padding: 0;
+    }
+    .skill-readme ul, .skill-readme ol {
+      margin: 0.4rem 0 0.4rem 1.5rem;
+    }
+    .skill-readme li { margin: 0.2rem 0; }
+    .skill-readme a {
+      color: #58A6FF;
+      text-decoration: none;
+    }
+    .skill-readme a:hover { text-decoration: underline; }
+    .skill-readme blockquote {
+      border-left: 3px solid #30363D;
+      padding-left: 1rem;
+      color: #8B949E;
+      margin: 0.5rem 0;
+    }
+    .label {
+      display: inline-block;
+      font-size: 0.6rem;
+      padding: 0.1rem 0.35rem;
+      border-radius: 4px;
       font-weight: 500;
       background: #1F3A5F;
       color: #58A6FF;
+      margin-right: 0.5rem;
+      vertical-align: middle;
     }
-    .links {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 1rem;
-    }
-    .links a {
-      display: inline-block;
-      padding: 0.6rem 1.4rem;
-      border-radius: 6px;
-      text-decoration: none;
-      font-size: 0.9rem;
-      font-weight: 500;
-      transition: opacity 0.2s;
-    }
-    .links a:hover { opacity: 0.85; }
-    .btn-primary {
-      background: #58A6FF;
-      color: #0D1117;
-    }
-    .btn-secondary {
-      background: transparent;
-      color: #58A6FF;
-      border: 1px solid #30363D;
+    .label-claude {
+      background: #3D1F1F;
+      color: #F85149;
     }
     footer {
       text-align: center;
       color: #484F58;
       font-size: 0.8rem;
-      margin-top: 2rem;
+      margin-top: 3rem;
       padding-bottom: 2rem;
     }
     footer a {
@@ -137,65 +211,185 @@
       text-decoration: none;
     }
     footer a:hover { text-decoration: underline; }
-    @media (max-width: 480px) {
-      .cards { grid-template-columns: 1fr; }
-      h1 { font-size: 2rem; }
+    #error-msg {
+      text-align: center;
+      color: #F85149;
+      font-size: 0.85rem;
+      padding: 2rem;
+      display: none;
+    }
+    @media (max-width: 600px) {
+      .skill-brief { display: none; }
+      h1 { font-size: 1.8rem; }
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <img src="brand/echo-skill-logo-512.png" alt="echoskill logo" class="logo">
-    <h1>echoskill</h1>
-    <p class="tagline">AI agent skills marketplace</p>
-    <span class="badge">coming soon</span>
-    <p class="description">
-      A public registry of reusable skills for AI coding agents.
-      Discover, share, and install capabilities for Claude Code,
-      Gemini CLI, and other MCP-compatible clients.
-    </p>
-
-    <div class="section">
-      <h2>Featured skills</h2>
-      <div class="cards">
-        <a href="https://github.com/echo-skill/echoskill/tree/main/coding/sociable-unit-tests" class="card">
-          <span class="label">coding</span>
-          <h3>sociable-unit-tests</h3>
-          <p>Sociable unit tests with directory isolation, no mocks, and transaction-level testing.</p>
-        </a>
-        <a href="https://github.com/echo-skill/echoskill/tree/main/prompting/capture-context" class="card">
-          <span class="label">prompting</span>
-          <h3>capture-context</h3>
-          <p>Capture all valuable session context before ending a conversation. Never lose work.</p>
-        </a>
-        <a href="https://github.com/echo-skill/echoskill/tree/main/coding/develop-skill" class="card">
-          <span class="label">coding</span>
-          <h3>develop-skill</h3>
-          <p>Create portable agent skills that work across Claude Code and Gemini CLI.</p>
-        </a>
-        <a href="https://github.com/echo-skill/echoskill/tree/main/coding/setup-agent-context" class="card">
-          <span class="label">coding</span>
-          <h3>setup-agent-context</h3>
-          <p>Configure CLAUDE.md and Gemini settings to make any repo AI-ready.</p>
-        </a>
-        <a href="https://github.com/echo-skill/echoskill/tree/main/coding/author-github-issue" class="card">
-          <span class="label">coding</span>
-          <h3>author-github-issue</h3>
-          <p>Structured GitHub issue authoring with privacy rules and best practices.</p>
-        </a>
-        <a href="https://github.com/echo-skill/echoskill/tree/main/coding/publish-skill" class="card">
-          <span class="label">coding</span>
-          <h3>publish-skill</h3>
-          <p>Publish skills to a marketplace for others to discover and install.</p>
-        </a>
+    <div class="header">
+      <img src="brand/echo-skill-logo-512.png" alt="echoskill logo" class="logo">
+      <h1>echoskill</h1>
+      <p class="tagline">AI agent skills marketplace</p>
+      <p class="intro">
+        Reusable skills for AI coding agents. Install a skill and your agent
+        gains new capabilities — code review, deployment workflows, testing
+        strategies, privacy checks, and more. Cross-platform by default.
+      </p>
+      <div class="install-box">
+        <code>pipx install echomodel</code>
+        <code>em skills install &lt;skill-name&gt;</code>
       </div>
     </div>
 
-    <div class="links">
-      <a href="https://github.com/echo-skill/echoskill" class="btn-primary">Browse all skills</a>
-      <a href="https://echomodel.ai" class="btn-secondary">echomodel.ai</a>
-    </div>
+    <div id="skills-container"></div>
+    <div id="error-msg">Could not load skills catalog. <a href="https://github.com/echo-skill/echoskill">View on GitHub</a> instead.</div>
+
+    <footer>
+      <a href="https://github.com/echo-skill/echoskill">Source on GitHub</a>
+      &nbsp;&middot;&nbsp;
+      Part of the <a href="https://echomodel.ai">echomodel</a> ecosystem
+    </footer>
   </div>
-  <footer>Part of the <a href="https://echomodel.ai">echomodel</a> ecosystem</footer>
+
+  <script>
+    const MANIFEST_URL = 'https://raw.githubusercontent.com/echo-skill/echoskill/main/manifest.json';
+    const README_BASE = 'https://raw.githubusercontent.com/echo-skill/echoskill/main/';
+    const readmeCache = {};
+
+    async function loadManifest() {
+      try {
+        const resp = await fetch(MANIFEST_URL);
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        return await resp.json();
+      } catch (e) {
+        document.getElementById('error-msg').style.display = 'block';
+        return null;
+      }
+    }
+
+    function firstSentence(desc) {
+      if (!desc) return '';
+      const s = desc.split(/\.\s/)[0];
+      return s.length > 80 ? s.slice(0, 77) + '...' : s;
+    }
+
+    function renderMarkdown(md) {
+      // Minimal markdown → HTML (no dependencies)
+      let html = md
+        // Code blocks
+        .replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) =>
+          `<pre><code>${code.replace(/</g, '&lt;')}</code></pre>`)
+        // Inline code
+        .replace(/`([^`]+)`/g, '<code>$1</code>')
+        // Headers
+        .replace(/^### (.+)$/gm, '<h3>$1</h3>')
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+        // Bold
+        .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+        // Links
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+        // Blockquotes
+        .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
+        // List items
+        .replace(/^- (.+)$/gm, '<li>$1</li>')
+        // Paragraphs (lines not already tagged)
+        .replace(/^(?!<[hluopb]|$)(.+)$/gm, '<p>$1</p>');
+      // Wrap consecutive <li> in <ul>
+      html = html.replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`);
+      return html;
+    }
+
+    async function loadReadme(path) {
+      if (readmeCache[path]) return readmeCache[path];
+      try {
+        const resp = await fetch(README_BASE + path + '/README.md');
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const md = await resp.text();
+        readmeCache[path] = md;
+        return md;
+      } catch {
+        return null;
+      }
+    }
+
+    function toggleSkill(card, path) {
+      const wasActive = card.classList.contains('active');
+      // Close all
+      document.querySelectorAll('.skill-card.active').forEach(c => {
+        c.classList.remove('active');
+      });
+      if (wasActive) return;
+      card.classList.add('active');
+
+      const detail = card.querySelector('.skill-detail');
+      const content = detail.querySelector('.skill-readme');
+      if (content.innerHTML) return; // Already loaded
+
+      detail.querySelector('.loading').textContent = 'Loading...';
+      loadReadme(path).then(md => {
+        if (md) {
+          content.innerHTML = renderMarkdown(md);
+          detail.querySelector('.loading').style.display = 'none';
+        } else {
+          detail.querySelector('.loading').textContent = 'Could not load README.';
+        }
+      });
+    }
+
+    function render(skills) {
+      const container = document.getElementById('skills-container');
+      const categories = {};
+      const categoryNames = {
+        'coding': 'Coding',
+        'prompting': 'Prompting',
+        'consulting': 'Consulting',
+        'claude': 'Claude Code',
+        '': 'Other'
+      };
+
+      skills.forEach(s => {
+        const cat = s.category || '';
+        if (!categories[cat]) categories[cat] = [];
+        categories[cat].push(s);
+      });
+
+      const order = ['coding', 'prompting', 'consulting', 'claude', ''];
+      order.forEach(cat => {
+        const items = categories[cat];
+        if (!items) return;
+
+        const label = document.createElement('div');
+        label.className = 'category-label';
+        label.textContent = categoryNames[cat] || cat;
+        container.appendChild(label);
+
+        items.forEach(s => {
+          const card = document.createElement('div');
+          card.className = 'skill-card';
+          const labelClass = cat === 'claude' ? 'label label-claude' : 'label';
+          card.innerHTML = `
+            <div class="skill-summary">
+              <span class="skill-name"><span class="${labelClass}">${cat || 'other'}</span>${s.name}</span>
+              <span class="skill-brief">${firstSentence(s.description)}</span>
+              <span class="skill-chevron">&#9654;</span>
+            </div>
+            <div class="skill-detail">
+              <div class="loading"></div>
+              <div class="skill-readme"></div>
+            </div>
+          `;
+          card.querySelector('.skill-summary').addEventListener('click', () => {
+            toggleSkill(card, s.path);
+          });
+          container.appendChild(card);
+        });
+      });
+    }
+
+    loadManifest().then(skills => {
+      if (skills) render(skills);
+    });
+  </script>
 </body>
 </html>
