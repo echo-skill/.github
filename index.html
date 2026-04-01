@@ -252,19 +252,68 @@
   </div>
 
   <script>
-    const MANIFEST_URL = 'https://raw.githubusercontent.com/echo-skill/echoskill/main/manifest.json';
-    const README_BASE = 'https://raw.githubusercontent.com/echo-skill/echoskill/main/';
-    const readmeCache = {};
+    const REPO = 'echo-skill/echoskill';
+    const BRANCH = 'main';
+    const RAW_BASE = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/`;
+    const TREE_URL = `https://api.github.com/repos/${REPO}/git/trees/${BRANCH}?recursive=1`;
+    const contentCache = {};
 
-    async function loadManifest() {
+    async function discoverSkills() {
       try {
-        const resp = await fetch(MANIFEST_URL);
+        const resp = await fetch(TREE_URL);
         if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        return await resp.json();
+        const data = await resp.json();
+
+        // Find all SKILL.md paths
+        const skillPaths = data.tree
+          .filter(f => f.type === 'blob' && f.path.endsWith('/SKILL.md'))
+          .map(f => f.path.replace('/SKILL.md', ''));
+
+        // Fetch frontmatter from each SKILL.md in parallel
+        const skills = await Promise.all(skillPaths.map(async (path) => {
+          try {
+            const r = await fetch(RAW_BASE + path + '/SKILL.md');
+            if (!r.ok) return null;
+            const text = await r.text();
+            const meta = parseFrontmatter(text);
+            const parts = path.split('/');
+            const category = parts.length > 1 ? parts[0] : '';
+            return {
+              name: meta.name || parts[parts.length - 1],
+              description: meta.description || '',
+              category,
+              path
+            };
+          } catch { return null; }
+        }));
+
+        return skills.filter(Boolean).sort((a, b) =>
+          (a.category + a.name).localeCompare(b.category + b.name));
       } catch (e) {
         document.getElementById('error-msg').style.display = 'block';
         return null;
       }
+    }
+
+    function parseFrontmatter(text) {
+      const match = text.match(/^---\n([\s\S]*?)\n---/);
+      if (!match) return {};
+      const meta = {};
+      // Simple YAML key-value extraction (handles name, description, multiline >-)
+      let current = null;
+      for (const line of match[1].split('\n')) {
+        const kv = line.match(/^(\w[\w-]*):\s*(.*)$/);
+        if (kv) {
+          current = kv[1];
+          let val = kv[2].trim();
+          if (val === '>-' || val === '>') { meta[current] = ''; continue; }
+          if (val.startsWith('"') && val.endsWith('"')) val = val.slice(1, -1);
+          meta[current] = val;
+        } else if (current && line.startsWith('  ')) {
+          meta[current] = (meta[current] ? meta[current] + ' ' : '') + line.trim();
+        }
+      }
+      return meta;
     }
 
     function firstSentence(desc) {
@@ -274,48 +323,36 @@
     }
 
     function renderMarkdown(md) {
-      // Minimal markdown → HTML (no dependencies)
       let html = md
-        // Code blocks
         .replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) =>
           `<pre><code>${code.replace(/</g, '&lt;')}</code></pre>`)
-        // Inline code
         .replace(/`([^`]+)`/g, '<code>$1</code>')
-        // Headers
         .replace(/^### (.+)$/gm, '<h3>$1</h3>')
         .replace(/^## (.+)$/gm, '<h2>$1</h2>')
         .replace(/^# (.+)$/gm, '<h1>$1</h1>')
-        // Bold
         .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-        // Links
         .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
-        // Blockquotes
         .replace(/^> (.+)$/gm, '<blockquote>$1</blockquote>')
-        // List items
         .replace(/^- (.+)$/gm, '<li>$1</li>')
-        // Paragraphs (lines not already tagged)
         .replace(/^(?!<[hluopb]|$)(.+)$/gm, '<p>$1</p>');
-      // Wrap consecutive <li> in <ul>
       html = html.replace(/(<li>.*<\/li>\n?)+/g, m => `<ul>${m}</ul>`);
       return html;
     }
 
-    async function loadReadme(path) {
-      if (readmeCache[path]) return readmeCache[path];
+    async function loadContent(path, file) {
+      const key = path + '/' + file;
+      if (contentCache[key]) return contentCache[key];
       try {
-        const resp = await fetch(README_BASE + path + '/README.md');
-        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-        const md = await resp.text();
-        readmeCache[path] = md;
-        return md;
-      } catch {
-        return null;
-      }
+        const resp = await fetch(RAW_BASE + key);
+        if (!resp.ok) return null;
+        const text = await resp.text();
+        contentCache[key] = text;
+        return text;
+      } catch { return null; }
     }
 
     function toggleSkill(card, path) {
       const wasActive = card.classList.contains('active');
-      // Close all
       document.querySelectorAll('.skill-card.active').forEach(c => {
         c.classList.remove('active');
       });
@@ -324,10 +361,10 @@
 
       const detail = card.querySelector('.skill-detail');
       const content = detail.querySelector('.skill-readme');
-      if (content.innerHTML) return; // Already loaded
+      if (content.innerHTML) return;
 
       detail.querySelector('.loading').textContent = 'Loading...';
-      loadReadme(path).then(md => {
+      loadContent(path, 'README.md').then(md => {
         if (md) {
           content.innerHTML = renderMarkdown(md);
           detail.querySelector('.loading').style.display = 'none';
@@ -387,7 +424,7 @@
       });
     }
 
-    loadManifest().then(skills => {
+    discoverSkills().then(skills => {
       if (skills) render(skills);
     });
   </script>
